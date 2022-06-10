@@ -51,7 +51,7 @@ func Create(commentId string, userId string) (*CommentLike, error) {
 	return comment, err
 }
 
-func (c CommentLike) GetCommentLikeLikeId() commentLikeId {
+func (c CommentLike) GetCommentLikeId() commentLikeId {
 	return c.commentLikeId
 }
 
@@ -97,4 +97,14 @@ func newUserId(value string) (*userId, error) {
 
 	userId := userId(value)
 	return &userId, nil
+}
+
+func (c CommentLike) IsCommentLikeYours(current_user_id string) (b bool, err error) {
+
+	if string(c.userId) != current_user_id {
+		err := fmt.Errorf("%s", "this comment like is not yours")
+		return false, err
+	}
+
+	return true, nil
 }

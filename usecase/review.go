@@ -4,7 +4,7 @@ import (
 	"app/domain/model/review"
 	"app/domain/model/review/comment"
 	"app/domain/model/review/review_like"
-//	"app/domain/model/review/comment_like"
+	"app/domain/model/review/comment_like"
 	"app/domain/repository"
 	"app/domain/domain_service"
 	"app/usecase/query_service"
@@ -23,6 +23,8 @@ type ReviewUseCase interface {
 	CommentDelete(comment_id string, current_user_id string) error
 	ReviewLikeCreate(review_id string, current_user_id string) error
 	ReviewLikeDelete(review_id string, current_user_id string) error
+	CommentLikeCreate(comment_id string, current_user_id string) error
+	CommentLikeDelete(comment_id string, current_user_id string) error
 }
 
 type reviewUseCase struct {
@@ -189,6 +191,47 @@ func (ru reviewUseCase) ReviewLikeDelete(review_id string, current_user_id strin
 	}
 
 	err = ru.reviewRepository.DeleteReviewLike(review_like)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (ru reviewUseCase) CommentLikeCreate(comment_id string, current_user_id string) error {
+
+	b := ru.reviewDomainService.IsInsertCommentLike(comment_id, current_user_id)
+	if b == false {
+		err := fmt.Errorf("%s", "this comment is your liked")
+		return err
+	}
+
+	created_comment_like, err := comment_like.Create(comment_id, current_user_id)
+	if err != nil {
+		return err
+	}
+
+	err = ru.reviewRepository.InsertCommentLike(created_comment_like)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (ru reviewUseCase) CommentLikeDelete(comment_id string, current_user_id string) error {
+
+	comment_like, err := ru.reviewRepository.GetCommentLikeByCommentIdAndUserId(comment_id, current_user_id)
+	if err != nil {
+		return err
+	}
+
+	_, err = comment_like.IsCommentLikeYours(current_user_id)
+	if err != nil {
+		return err
+	}
+
+	err = ru.reviewRepository.DeleteCommentLike(comment_like)
 	if err != nil {
 		return err
 	}
