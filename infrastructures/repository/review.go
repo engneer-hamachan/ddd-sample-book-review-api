@@ -3,8 +3,8 @@ package repository
 import (
 	"app/domain/model/review"
 	"app/domain/model/review/comment"
-	"app/domain/model/review/review_like"
 	"app/domain/model/review/comment_like"
+	"app/domain/model/review/review_like"
 	"app/domain/repository"
 	"app/infrastructures/repository/dto"
 	"github.com/jinzhu/gorm"
@@ -57,9 +57,9 @@ func (rr *reviewRepository) PutReview(review *review.Review) error {
 		Where("review_id = ?", string(review.GetReviewId())).
 		Update("public_flg", bool(review.GetPublicFlg())).
 		Updates(&converted_review); result.Error != nil {
-  		err := result.Error
-  		return err
-  	}
+		err := result.Error
+		return err
+	}
 
 	return nil
 }
@@ -70,14 +70,14 @@ func (rr *reviewRepository) DeleteReview(review *review.Review) error {
 
 	if result := rr.Conn.Where("review_id = ?", string(review.GetReviewId())).
 		Delete(&converted_review); result.Error != nil {
-			err := result.Error
-			return err
-		}
+		err := result.Error
+		return err
+	}
 
 	return nil
 }
 
-func (rr *reviewRepository) InsertComment(comment *comment.Comment) (comment_id *string, err error){
+func (rr *reviewRepository) InsertComment(comment *comment.Comment) (comment_id *string, err error) {
 	converted_comment := dto.ConvertComment(comment)
 
 	if result := rr.Conn.Save(&converted_comment); result.Error != nil {
@@ -113,9 +113,9 @@ func (rr *reviewRepository) DeleteComment(comment *comment.Comment) error {
 
 	if result := rr.Conn.Where("comment_id = ?", string(comment.GetCommentId())).
 		Delete(&converted_comment); result.Error != nil {
-			err := result.Error
-			return err
-		}
+		err := result.Error
+		return err
+	}
 
 	return nil
 }
@@ -158,9 +158,9 @@ func (rr *reviewRepository) DeleteReviewLike(review_like *review_like.ReviewLike
 
 	if result := rr.Conn.Where("review_like_id = ?", string(review_like.GetReviewLikeId())).
 		Delete(&converted_review_like); result.Error != nil {
-			err := result.Error
-			return err
-		}
+		err := result.Error
+		return err
+	}
 
 	return nil
 }
@@ -203,9 +203,9 @@ func (rr *reviewRepository) DeleteCommentLike(comment_like *comment_like.Comment
 
 	if result := rr.Conn.Where("comment_like_id = ?", string(comment_like.GetCommentLikeId())).
 		Delete(&converted_comment_like); result.Error != nil {
-			err := result.Error
-			return err
-		}
+		err := result.Error
+		return err
+	}
 
 	return nil
 }

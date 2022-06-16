@@ -6,15 +6,15 @@ import (
 
 type CommentLike struct {
 	CommentLikeId string
-  CommentId     string
-	UserId       string
+	CommentId     string
+	UserId        string
 }
 
 func ConvertCommentLike(c *comment_like.CommentLike) *CommentLike {
 	return &CommentLike{
 		CommentLikeId: string(c.GetCommentLikeId()),
-		CommentId:  string(c.GetCommentId()),
-		UserId:    string(c.GetUserId()),
+		CommentId:     string(c.GetCommentId()),
+		UserId:        string(c.GetUserId()),
 	}
 }
 

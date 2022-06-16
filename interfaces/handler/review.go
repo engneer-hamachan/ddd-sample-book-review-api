@@ -43,7 +43,7 @@ func (rh reviewHandler) ReviewCreate(c *gin.Context) {
 		Review      string `json:"review" binding:"required"`
 		ReadedAt    string `json:"readed_at" binding:"required"`
 		Stars       int    `json:"stars" binding:"required"`
-		PublicFlg   bool `json:"public_flg" binding:"required"`
+		PublicFlg   bool   `json:"public_flg" binding:"required"`
 	}
 
 	var json RequestDataField
@@ -199,8 +199,8 @@ func (rh reviewHandler) ReviewDelete(c *gin.Context) {
 func (rh reviewHandler) CommentCreate(c *gin.Context) {
 
 	type RequestDataField struct {
-		ReviewId   string `json:"review_id" binding:"required"`
-		Comment string `json:"comment" binding:"required"`
+		ReviewId string `json:"review_id" binding:"required"`
+		Comment  string `json:"comment" binding:"required"`
 	}
 
 	var json RequestDataField
@@ -264,7 +264,7 @@ func (rh reviewHandler) CommentDelete(c *gin.Context) {
 func (rh reviewHandler) ReviewLikeCreate(c *gin.Context) {
 
 	type RequestDataField struct {
-		ReviewId   string `json:"review_id" binding:"required"`
+		ReviewId string `json:"review_id" binding:"required"`
 	}
 
 	var json RequestDataField
@@ -295,7 +295,7 @@ func (rh reviewHandler) ReviewLikeCreate(c *gin.Context) {
 func (rh reviewHandler) ReviewLikeDelete(c *gin.Context) {
 
 	type RequestDataField struct {
-		ReviewId   string `json:"review_id" binding:"required"`
+		ReviewId string `json:"review_id" binding:"required"`
 	}
 
 	var json RequestDataField
@@ -326,7 +326,7 @@ func (rh reviewHandler) ReviewLikeDelete(c *gin.Context) {
 func (rh reviewHandler) CommentLikeCreate(c *gin.Context) {
 
 	type RequestDataField struct {
-		CommentId   string `json:"comment_id" binding:"required"`
+		CommentId string `json:"comment_id" binding:"required"`
 	}
 
 	var json RequestDataField
@@ -357,7 +357,7 @@ func (rh reviewHandler) CommentLikeCreate(c *gin.Context) {
 func (rh reviewHandler) CommentLikeDelete(c *gin.Context) {
 
 	type RequestDataField struct {
-		CommentId   string `json:"comment_id" binding:"required"`
+		CommentId string `json:"comment_id" binding:"required"`
 	}
 
 	var json RequestDataField

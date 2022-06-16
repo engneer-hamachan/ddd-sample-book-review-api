@@ -6,10 +6,10 @@ import (
 )
 
 type Comment struct {
-	commentId   commentId
-  reviewId    reviewId
-	userId      userId
-	comment     comment
+	commentId commentId
+	reviewId  reviewId
+	userId    userId
+	comment   comment
 }
 
 type commentId string
@@ -19,11 +19,10 @@ type comment string
 
 func New(commentId string, reviewId string, userId string, commentVal string) (*Comment, error) {
 
-  createdCommentId, err := newCommentId(commentId)
+	createdCommentId, err := newCommentId(commentId)
 	if err != nil {
 		return nil, err
 	}
-
 
 	createdReviewId, err := newReviewId(reviewId)
 	if err != nil {
@@ -41,10 +40,10 @@ func New(commentId string, reviewId string, userId string, commentVal string) (*
 	}
 
 	comment := Comment{
-		commentId:    *createdCommentId,
-		reviewId:     *createdReviewId,
-		userId:       *createdUserId,
-		comment:      *createdComment,
+		commentId: *createdCommentId,
+		reviewId:  *createdReviewId,
+		userId:    *createdUserId,
+		comment:   *createdComment,
 	}
 	return &comment, nil
 }
@@ -76,7 +75,6 @@ func (c Comment) GetComment() comment {
 	return c.comment
 }
 
-
 func newCommentId(value string) (*commentId, error) {
 
 	if value == "" {
@@ -101,7 +99,6 @@ func newReviewId(value string) (*reviewId, error) {
 	return &reviewId, nil
 }
 
-
 func newUserId(value string) (*userId, error) {
 
 	if value == "" {
@@ -112,7 +109,6 @@ func newUserId(value string) (*userId, error) {
 	userId := userId(value)
 	return &userId, nil
 }
-
 
 func newComment(value string) (*comment, error) {
 

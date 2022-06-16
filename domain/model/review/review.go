@@ -92,7 +92,7 @@ func New(reviewId string, userId string, bookTitle string, reviewTitle string, p
 func Create(userId string, bookTitle string, reviewTitle string, publisher string, reviewVal string, readedAt time.Time, stars int, publicFlg bool) (*Review, error) {
 	reviewId := uuid.New().String()
 	review, err := New(reviewId, userId, bookTitle, reviewTitle, publisher, reviewVal, readedAt, stars, publicFlg)
-	
+
 	if err != nil {
 		return nil, err
 	}
