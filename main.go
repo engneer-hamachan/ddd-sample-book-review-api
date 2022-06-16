@@ -71,11 +71,13 @@ func main() {
 		authUserGroup.GET("/reviews/page/:page", reviewHandler.ReviewAll)
 		authUserGroup.PUT("/review/public_flg", reviewHandler.ChangeReviewPublicFlg)
 		authUserGroup.DELETE("/review", reviewHandler.ReviewDelete)
+		authUserGroup.POST("/review/like", reviewHandler.ReviewLikeCreate)
+		authUserGroup.DELETE("/review/like", reviewHandler.ReviewLikeDelete)
 
 		authUserGroup.POST("/review/comment", reviewHandler.CommentCreate)
 		authUserGroup.DELETE("/review/comment", reviewHandler.CommentDelete)
-		authUserGroup.POST("/review/like", reviewHandler.ReviewLikeCreate)
-		authUserGroup.DELETE("/review/like", reviewHandler.ReviewLikeDelete)
+		authUserGroup.POST("/review/comment/like", reviewHandler.CommentLikeCreate)
+		authUserGroup.DELETE("/review/comment/like", reviewHandler.CommentLikeDelete)
 	}
 
 	router.Run("localhost:8080")

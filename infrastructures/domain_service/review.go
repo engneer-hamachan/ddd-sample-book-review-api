@@ -22,3 +22,13 @@ func (rds *reviewDomainService) IsInsertReviewLike(review_id string, current_use
 	}
 	return false
 }
+
+func (rds *reviewDomainService) IsInsertCommentLike(comment_id string, current_user_id string) bool {
+
+	var ct int
+	rds.Conn.Table("comment_likes").Where("comment_id = ?", comment_id).Where("user_id = ?", current_user_id).Count(&ct)
+	if ct == 0 {
+		return true
+	}
+	return false
+}

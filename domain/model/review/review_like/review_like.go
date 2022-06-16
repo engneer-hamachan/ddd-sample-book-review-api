@@ -7,7 +7,7 @@ import (
 
 type ReviewLike struct {
 	reviewLikeId reviewLikeId
-  reviewId     reviewId
+	reviewId     reviewId
 	userId       userId
 }
 
@@ -17,12 +17,12 @@ type userId string
 
 func New(reviewLikeId string, reviewId string, userId string) (*ReviewLike, error) {
 
-  createdReviewLikeId, err := newReviewLikeId(reviewLikeId)
+	createdReviewLikeId, err := newReviewLikeId(reviewLikeId)
 	if err != nil {
 		return nil, err
 	}
 
-  createdReviewId, err := newReviewId(reviewId)
+	createdReviewId, err := newReviewId(reviewId)
 	if err != nil {
 		return nil, err
 	}
@@ -34,7 +34,7 @@ func New(reviewLikeId string, reviewId string, userId string) (*ReviewLike, erro
 
 	reviewLike := ReviewLike{
 		reviewLikeId: *createdReviewLikeId,
-    reviewId:     *createdReviewId,
+		reviewId:     *createdReviewId,
 		userId:       *createdUserId,
 	}
 	return &reviewLike, nil
@@ -86,7 +86,6 @@ func newReviewId(value string) (*reviewId, error) {
 
 	return &reviewId, nil
 }
-
 
 func newUserId(value string) (*userId, error) {
 

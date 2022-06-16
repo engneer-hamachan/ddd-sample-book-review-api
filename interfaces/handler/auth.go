@@ -2,13 +2,13 @@ package rest
 
 import (
 	"app/usecase"
+	"fmt"
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 	"net/http"
 	"os"
 	"time"
-	"fmt"
 )
 
 type AuthHandler interface {
