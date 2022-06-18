@@ -1,19 +1,19 @@
-package vo
+package user
 
 import (
 	"fmt"
 )
 
-type UserId string
+type userId string
 
-func NewUserId(value string) (*UserId, error) {
+func newUserId(value string) (*userId, error) {
 
 	if value == "" {
 		err := fmt.Errorf("%s", "empty arg:userId newUserId()")
 		return nil, err
 	}
 
-	userId := UserId(value)
+	userId := userId(value)
 
 	return &userId, nil
 }

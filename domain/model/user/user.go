@@ -2,36 +2,33 @@ package user
 
 import (
 	"github.com/google/uuid"
-	"app/domain/model/vo"
 )
 
 type User struct {
-	userId     vo.UserId
-	name       vo.UserName
-	mail       vo.Mail
-	password   vo.Password
+	userId     userId
+	name       name
+	mail       mail
+	password   password
 }
-
-type password string
 
 func New(userId string, name string, mail string, password string) (*User, error) {
 
-	createdUserId, err := vo.NewUserId(userId)
+	createdUserId, err := newUserId(userId)
 	if err != nil {
 		return nil, err
 	}
 
-	createdName, err := vo.NewUserName(name)
+	createdName, err := newName(name)
 	if err != nil {
 		return nil, err
 	}
 
-	createdMail, err := vo.NewMail(mail)
+	createdMail, err := newMail(mail)
 	if err != nil {
 		return nil, err
 	}
 
-	createdPassword, err := vo.NewPassword(password)
+	createdPassword, err := newPassword(password)
 	if err != nil {
 		return nil, err
 	}
@@ -57,25 +54,25 @@ func Create(name string, mail string, password string) (*User, error) {
 	return user, err
 }
 
-func (u User) GetUserId() vo.UserId {
+func (u User) GetUserId() userId {
 	return u.userId
 }
 
-func (u User) GetName() vo.UserName {
+func (u User) GetName() name {
 	return u.name
 }
 
-func (u User) GetMail() vo.Mail {
+func (u User) GetMail() mail {
 	return u.mail
 }
 
-func (u User) GetPassword() vo.Password {
+func (u User) GetPassword() password {
 	return u.password
 }
 
 func (u *User) ChangeMail(value string) (*User, error) {
 
-	mail, err := vo.NewMail(value)
+	mail, err := newMail(value)
 	if err != nil {
 		return nil, err
 	}

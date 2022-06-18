@@ -1,18 +1,18 @@
-package vo
+package user
 
 import (
 	"fmt"
 )
 
-type Password string
+type password string
 
-func NewPassword(value string) (*Password, error) {
+func newPassword(value string) (*password, error) {
 
 	if value == "" {
 		err := fmt.Errorf("%s", "empty arg:password NewPassword()")
 		return nil, err
 	}
 
-	password := Password(value)
+	password := password(value)
 	return &password, nil
 }
