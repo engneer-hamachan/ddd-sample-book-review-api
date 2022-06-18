@@ -2,40 +2,31 @@ package review
 
 import (
 	"fmt"
-	"github.com/google/uuid"
 	"time"
+	"github.com/google/uuid"
+	"app/domain/model/user"
 )
 
 type Review struct {
-	reviewId    reviewId
-	userId      userId
+	reviewId    ReviewId
+	userId      user.UserId
 	bookTitle   bookTitle
 	reviewTitle reviewTitle
 	publisher   publisher
-	review      review
+	review      reviewComment
 	readedAt    readedAt
 	stars       stars
 	publicFlg   publicFlg
 }
 
-type reviewId string
-type userId string
-type bookTitle string
-type reviewTitle string
-type publisher string
-type review string
-type readedAt time.Time
-type stars int
-type publicFlg bool
-
 func New(reviewId string, userId string, bookTitle string, reviewTitle string, publisher string, reviewVal string, readedAt time.Time, stars int, publicFlg bool) (*Review, error) {
 
-	createdReviewId, err := newReviewId(reviewId)
+	createdReviewId, err := NewReviewId(reviewId)
 	if err != nil {
 		return nil, err
 	}
 
-	createdUserId, err := newUserId(userId)
+	createdUserId, err := user.NewUserId(userId)
 	if err != nil {
 		return nil, err
 	}
@@ -55,7 +46,7 @@ func New(reviewId string, userId string, bookTitle string, reviewTitle string, p
 		return nil, err
 	}
 
-	createdReview, err := newReview(reviewVal)
+	createdReview, err := newReviewComment(reviewVal)
 	if err != nil {
 		return nil, err
 	}
@@ -100,11 +91,11 @@ func Create(userId string, bookTitle string, reviewTitle string, publisher strin
 	return review, err
 }
 
-func (r Review) GetReviewId() reviewId {
+func (r Review) GetReviewId() ReviewId {
 	return r.reviewId
 }
 
-func (r Review) GetUserId() userId {
+func (r Review) GetUserId() user.UserId {
 	return r.userId
 }
 
@@ -120,7 +111,7 @@ func (r Review) GetPublisher() publisher {
 	return r.publisher
 }
 
-func (r Review) GetReview() review {
+func (r Review) GetReview() reviewComment {
 	return r.review
 }
 
@@ -134,96 +125,6 @@ func (r Review) GetStars() stars {
 
 func (r Review) GetPublicFlg() publicFlg {
 	return r.publicFlg
-}
-
-func newReviewId(value string) (*reviewId, error) {
-
-	if value == "" {
-		err := fmt.Errorf("%s", "empty arg:reviewId newReviewId()")
-		return nil, err
-	}
-
-	reviewId := reviewId(value)
-
-	return &reviewId, nil
-}
-
-func newUserId(value string) (*userId, error) {
-
-	if value == "" {
-		err := fmt.Errorf("%s", "empty arg:userId newUserId()")
-		return nil, err
-	}
-
-	userId := userId(value)
-
-	return &userId, nil
-}
-
-func newBookTitle(value string) (*bookTitle, error) {
-
-	if value == "" {
-		err := fmt.Errorf("%s", "empty arg:bookTitle newBookTitle()")
-		return nil, err
-	}
-
-	bookTitle := bookTitle(value)
-	return &bookTitle, nil
-}
-
-func newReviewTitle(value string) (*reviewTitle, error) {
-
-	if value == "" {
-		err := fmt.Errorf("%s", "empty arg:reviewTitle newReviewTitle()")
-		return nil, err
-	}
-
-	reviewTitle := reviewTitle(value)
-	return &reviewTitle, nil
-}
-
-func newPublisher(value string) (*publisher, error) {
-
-	if value == "" {
-		err := fmt.Errorf("%s", "empty arg:publisher newPublisher()")
-		return nil, err
-	}
-
-	publisher := publisher(value)
-	return &publisher, nil
-}
-
-func newReview(value string) (*review, error) {
-
-	if value == "" {
-		err := fmt.Errorf("%s", "empty arg:review newReview()")
-		return nil, err
-	}
-
-	review := review(value)
-	return &review, nil
-}
-
-func newReadedAt(value time.Time) (*readedAt, error) {
-	readedAt := readedAt(value)
-	return &readedAt, nil
-}
-
-func newStars(value int) (*stars, error) {
-
-	if value < 1 || value > 5 {
-		err := fmt.Errorf("%s", "error arg:stars between 1 and 5")
-		return nil, err
-	}
-
-	stars := stars(value)
-	return &stars, nil
-}
-
-func newPublicFlg(value bool) (*publicFlg, error) {
-
-	publicFlg := publicFlg(value)
-	return &publicFlg, nil
 }
 
 func (r *Review) ChangePublicFlg(current_user_id string) (*Review, error) {
