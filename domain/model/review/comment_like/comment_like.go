@@ -3,17 +3,15 @@ package comment_like
 import (
 	"fmt"
 	"github.com/google/uuid"
+	"app/domain/model/review/comment"
+	"app/domain/model/user"
 )
 
 type CommentLike struct {
 	commentLikeId commentLikeId
-  commentId     commentId
-	userId        userId
+  commentId     comment.CommentId
+	userId        user.UserId
 }
-
-type commentLikeId string
-type commentId string
-type userId string
 
 func New(commentLikeId string, commentId string, userId string) (*CommentLike, error) {
 
@@ -22,12 +20,12 @@ func New(commentLikeId string, commentId string, userId string) (*CommentLike, e
 		return nil, err
 	}
 
-  createdCommentId, err := newCommentId(commentId)
+  createdCommentId, err := comment.NewCommentId(commentId)
 	if err != nil {
 		return nil, err
 	}
 
-	createdUserId, err := newUserId(userId)
+	createdUserId, err := user.NewUserId(userId)
 	if err != nil {
 		return nil, err
 	}
@@ -55,48 +53,12 @@ func (c CommentLike) GetCommentLikeId() commentLikeId {
 	return c.commentLikeId
 }
 
-func (c CommentLike) GetCommentId() commentId {
+func (c CommentLike) GetCommentId() comment.CommentId {
 	return c.commentId
 }
 
-func (c CommentLike) GetUserId() userId {
+func (c CommentLike) GetUserId() user.UserId {
 	return c.userId
-}
-
-func newCommentLikeId(value string) (*commentLikeId, error) {
-
-	if value == "" {
-		err := fmt.Errorf("%s", "empty arg:commentLikeId newCommentLikeId()")
-		return nil, err
-	}
-
-	commentLikeId := commentLikeId(value)
-
-	return &commentLikeId, nil
-}
-
-func newCommentId(value string) (*commentId, error) {
-
-	if value == "" {
-		err := fmt.Errorf("%s", "empty arg:commentId newCommentId()")
-		return nil, err
-	}
-
-	commentId := commentId(value)
-
-	return &commentId, nil
-}
-
-
-func newUserId(value string) (*userId, error) {
-
-	if value == "" {
-		err := fmt.Errorf("%s", "empty arg:userId newUserId()")
-		return nil, err
-	}
-
-	userId := userId(value)
-	return &userId, nil
 }
 
 func (c CommentLike) IsCommentLikeYours(current_user_id string) (b bool, err error) {

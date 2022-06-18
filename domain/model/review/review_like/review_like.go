@@ -3,17 +3,15 @@ package review_like
 import (
 	"fmt"
 	"github.com/google/uuid"
+	"app/domain/model/review"
+	"app/domain/model/user"
 )
 
 type ReviewLike struct {
 	reviewLikeId reviewLikeId
-	reviewId     reviewId
-	userId       userId
+	reviewId     review.ReviewId
+	userId       user.UserId
 }
-
-type reviewLikeId string
-type reviewId string
-type userId string
 
 func New(reviewLikeId string, reviewId string, userId string) (*ReviewLike, error) {
 
@@ -22,12 +20,12 @@ func New(reviewLikeId string, reviewId string, userId string) (*ReviewLike, erro
 		return nil, err
 	}
 
-	createdReviewId, err := newReviewId(reviewId)
+	createdReviewId, err := review.NewReviewId(reviewId)
 	if err != nil {
 		return nil, err
 	}
 
-	createdUserId, err := newUserId(userId)
+	createdUserId, err := user.NewUserId(userId)
 	if err != nil {
 		return nil, err
 	}
@@ -55,47 +53,12 @@ func (r ReviewLike) GetReviewLikeId() reviewLikeId {
 	return r.reviewLikeId
 }
 
-func (r ReviewLike) GetReviewId() reviewId {
+func (r ReviewLike) GetReviewId() review.ReviewId {
 	return r.reviewId
 }
 
-func (r ReviewLike) GetUserId() userId {
+func (r ReviewLike) GetUserId() user.UserId {
 	return r.userId
-}
-
-func newReviewLikeId(value string) (*reviewLikeId, error) {
-
-	if value == "" {
-		err := fmt.Errorf("%s", "empty arg:reviewLikeId newReviewLikeId()")
-		return nil, err
-	}
-
-	reviewLikeId := reviewLikeId(value)
-
-	return &reviewLikeId, nil
-}
-
-func newReviewId(value string) (*reviewId, error) {
-
-	if value == "" {
-		err := fmt.Errorf("%s", "empty arg:reviewId newReviewId()")
-		return nil, err
-	}
-
-	reviewId := reviewId(value)
-
-	return &reviewId, nil
-}
-
-func newUserId(value string) (*userId, error) {
-
-	if value == "" {
-		err := fmt.Errorf("%s", "empty arg:userId newUserId()")
-		return nil, err
-	}
-
-	userId := userId(value)
-	return &userId, nil
 }
 
 func (r ReviewLike) IsReviewLikeYours(current_user_id string) (b bool, err error) {

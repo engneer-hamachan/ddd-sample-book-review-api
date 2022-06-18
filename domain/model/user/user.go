@@ -1,25 +1,19 @@
 package user
 
 import (
-	"fmt"
 	"github.com/google/uuid"
 )
 
 type User struct {
-	userId     userId
+	userId     UserId
 	name       name
 	mail       mail
 	password   password
 }
 
-type userId string
-type name string
-type mail string
-type password string
-
 func New(userId string, name string, mail string, password string) (*User, error) {
 
-	createdUserId, err := newUserId(userId)
+	createdUserId, err := NewUserId(userId)
 	if err != nil {
 		return nil, err
 	}
@@ -60,7 +54,7 @@ func Create(name string, mail string, password string) (*User, error) {
 	return user, err
 }
 
-func (u User) GetUserId() userId {
+func (u User) GetUserId() UserId {
 	return u.userId
 }
 
@@ -76,40 +70,6 @@ func (u User) GetPassword() password {
 	return u.password
 }
 
-func newUserId(value string) (*userId, error) {
-
-	if value == "" {
-		err := fmt.Errorf("%s", "empty arg:userId newUserId()")
-		return nil, err
-	}
-
-	userId := userId(value)
-
-	return &userId, nil
-}
-
-func newName(value string) (*name, error) {
-
-	if value == "" {
-		err := fmt.Errorf("%s", "empty arg:name newName()")
-		return nil, err
-	}
-
-	name := name(value)
-	return &name, nil
-}
-
-func newMail(value string) (*mail, error) {
-
-	if value == "" {
-		err := fmt.Errorf("%s", "empty arg:mail newMail()")
-		return nil, err
-	}
-
-	mail := mail(value)
-	return &mail, nil
-}
-
 func (u *User) ChangeMail(value string) (*User, error) {
 
 	mail, err := newMail(value)
@@ -119,15 +79,4 @@ func (u *User) ChangeMail(value string) (*User, error) {
 	u.mail = *mail
 
 	return u, nil
-}
-
-func newPassword(value string) (*password, error) {
-
-	if value == "" {
-		err := fmt.Errorf("%s", "empty arg:password newPassword()")
-		return nil, err
-	}
-
-	password := password(value)
-	return &password, nil
 }
