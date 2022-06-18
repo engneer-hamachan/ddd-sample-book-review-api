@@ -4,15 +4,15 @@ import (
 	"fmt"
 )
 
-type reviewComment string
+type reviewVal string
 
-func newReviewComment(value string) (*reviewComment, error) {
+func newReviewComment(value string) (*reviewVal, error) {
 
 	if value == "" {
 		err := fmt.Errorf("%s", "empty arg:review newReviewComment()")
 		return nil, err
 	}
 
-	review := reviewComment(value)
+	review := reviewVal(value)
 	return &review, nil
 }

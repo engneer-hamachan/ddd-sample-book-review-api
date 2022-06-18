@@ -13,7 +13,7 @@ type Review struct {
 	bookTitle   bookTitle
 	reviewTitle reviewTitle
 	publisher   publisher
-	review      reviewComment
+	review      reviewVal
 	readedAt    readedAt
 	stars       stars
 	publicFlg   publicFlg
@@ -111,7 +111,7 @@ func (r Review) GetPublisher() publisher {
 	return r.publisher
 }
 
-func (r Review) GetReview() reviewComment {
+func (r Review) GetReview() reviewVal {
 	return r.review
 }
 
