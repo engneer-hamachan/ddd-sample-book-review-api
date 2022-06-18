@@ -1,40 +1,36 @@
 package comment
 
 import (
-	"fmt"
 	"github.com/google/uuid"
+	"app/domain/model/review"
+	"app/domain/model/user"
 )
 
 type Comment struct {
-	commentId commentId
-	reviewId  reviewId
-	userId    userId
-	comment   comment
+	commentId CommentId
+	reviewId  review.ReviewId
+	userId    user.UserId
+	comment   commentVal
 }
-
-type commentId string
-type reviewId string
-type userId string
-type comment string
 
 func New(commentId string, reviewId string, userId string, commentVal string) (*Comment, error) {
 
-	createdCommentId, err := newCommentId(commentId)
+	createdCommentId, err := NewCommentId(commentId)
 	if err != nil {
 		return nil, err
 	}
 
-	createdReviewId, err := newReviewId(reviewId)
+	createdReviewId, err := review.NewReviewId(reviewId)
 	if err != nil {
 		return nil, err
 	}
 
-	createdUserId, err := newUserId(userId)
+	createdUserId, err := user.NewUserId(userId)
 	if err != nil {
 		return nil, err
 	}
 
-	createdComment, err := newComment(commentVal)
+	createdComment, err := newCommentVal(commentVal)
 	if err != nil {
 		return nil, err
 	}
@@ -59,64 +55,18 @@ func Create(reviewId string, userId string, commentVal string) (*Comment, error)
 	return comment, err
 }
 
-func (c Comment) GetCommentId() commentId {
+func (c Comment) GetCommentId() CommentId {
 	return c.commentId
 }
 
-func (c Comment) GetReviewId() reviewId {
+func (c Comment) GetReviewId() review.ReviewId {
 	return c.reviewId
 }
 
-func (c Comment) GetUserId() userId {
+func (c Comment) GetUserId() user.UserId {
 	return c.userId
 }
 
-func (c Comment) GetComment() comment {
+func (c Comment) GetComment() commentVal {
 	return c.comment
-}
-
-func newCommentId(value string) (*commentId, error) {
-
-	if value == "" {
-		err := fmt.Errorf("%s", "empty arg:commentId newCommentId()")
-		return nil, err
-	}
-
-	commentId := commentId(value)
-
-	return &commentId, nil
-}
-
-func newReviewId(value string) (*reviewId, error) {
-
-	if value == "" {
-		err := fmt.Errorf("%s", "empty arg:reviewId newReviewId()")
-		return nil, err
-	}
-
-	reviewId := reviewId(value)
-
-	return &reviewId, nil
-}
-
-func newUserId(value string) (*userId, error) {
-
-	if value == "" {
-		err := fmt.Errorf("%s", "empty arg:userId newUserId()")
-		return nil, err
-	}
-
-	userId := userId(value)
-	return &userId, nil
-}
-
-func newComment(value string) (*comment, error) {
-
-	if value == "" {
-		err := fmt.Errorf("%s", "empty arg:comment newComment()")
-		return nil, err
-	}
-
-	comment := comment(value)
-	return &comment, nil
 }
