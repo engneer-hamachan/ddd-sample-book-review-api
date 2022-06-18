@@ -5,7 +5,7 @@ import (
 )
 
 type User struct {
-	userId     userId
+	userId     UserId
 	name       name
 	mail       mail
 	password   password
@@ -13,7 +13,7 @@ type User struct {
 
 func New(userId string, name string, mail string, password string) (*User, error) {
 
-	createdUserId, err := newUserId(userId)
+	createdUserId, err := NewUserId(userId)
 	if err != nil {
 		return nil, err
 	}
@@ -54,7 +54,7 @@ func Create(name string, mail string, password string) (*User, error) {
 	return user, err
 }
 
-func (u User) GetUserId() userId {
+func (u User) GetUserId() UserId {
 	return u.userId
 }
 
