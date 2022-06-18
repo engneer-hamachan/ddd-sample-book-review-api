@@ -1,40 +1,37 @@
 package user
 
 import (
-	"fmt"
 	"github.com/google/uuid"
+	"app/domain/model/vo"
 )
 
 type User struct {
-	userId     userId
-	name       name
-	mail       mail
-	password   password
+	userId     vo.UserId
+	name       vo.UserName
+	mail       vo.Mail
+	password   vo.Password
 }
 
-type userId string
-type name string
-type mail string
 type password string
 
 func New(userId string, name string, mail string, password string) (*User, error) {
 
-	createdUserId, err := newUserId(userId)
+	createdUserId, err := vo.NewUserId(userId)
 	if err != nil {
 		return nil, err
 	}
 
-	createdName, err := newName(name)
+	createdName, err := vo.NewUserName(name)
 	if err != nil {
 		return nil, err
 	}
 
-	createdMail, err := newMail(mail)
+	createdMail, err := vo.NewMail(mail)
 	if err != nil {
 		return nil, err
 	}
 
-	createdPassword, err := newPassword(password)
+	createdPassword, err := vo.NewPassword(password)
 	if err != nil {
 		return nil, err
 	}
@@ -60,74 +57,29 @@ func Create(name string, mail string, password string) (*User, error) {
 	return user, err
 }
 
-func (u User) GetUserId() userId {
+func (u User) GetUserId() vo.UserId {
 	return u.userId
 }
 
-func (u User) GetName() name {
+func (u User) GetName() vo.UserName {
 	return u.name
 }
 
-func (u User) GetMail() mail {
+func (u User) GetMail() vo.Mail {
 	return u.mail
 }
 
-func (u User) GetPassword() password {
+func (u User) GetPassword() vo.Password {
 	return u.password
-}
-
-func newUserId(value string) (*userId, error) {
-
-	if value == "" {
-		err := fmt.Errorf("%s", "empty arg:userId newUserId()")
-		return nil, err
-	}
-
-	userId := userId(value)
-
-	return &userId, nil
-}
-
-func newName(value string) (*name, error) {
-
-	if value == "" {
-		err := fmt.Errorf("%s", "empty arg:name newName()")
-		return nil, err
-	}
-
-	name := name(value)
-	return &name, nil
-}
-
-func newMail(value string) (*mail, error) {
-
-	if value == "" {
-		err := fmt.Errorf("%s", "empty arg:mail newMail()")
-		return nil, err
-	}
-
-	mail := mail(value)
-	return &mail, nil
 }
 
 func (u *User) ChangeMail(value string) (*User, error) {
 
-	mail, err := newMail(value)
+	mail, err := vo.NewMail(value)
 	if err != nil {
 		return nil, err
 	}
 	u.mail = *mail
 
 	return u, nil
-}
-
-func newPassword(value string) (*password, error) {
-
-	if value == "" {
-		err := fmt.Errorf("%s", "empty arg:password newPassword()")
-		return nil, err
-	}
-
-	password := password(value)
-	return &password, nil
 }
