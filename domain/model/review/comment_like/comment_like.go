@@ -1,41 +1,38 @@
 package comment_like
 
 import (
+	"app/domain/model/vo"
 	"fmt"
 	"github.com/google/uuid"
 )
 
 type CommentLike struct {
-	commentLikeId commentLikeId
-  commentId     commentId
-	userId        userId
+	commentLikeId vo.UuId
+	commentId     vo.UuId
+	userId        vo.UuId
 }
-
-type commentLikeId string
-type commentId string
-type userId string
 
 func New(commentLikeId string, commentId string, userId string) (*CommentLike, error) {
 
-  createdCommentLikeId, err := newCommentLikeId(commentLikeId)
+	createdCommentLikeId, err := vo.NewUuId(commentLikeId)
 	if err != nil {
 		return nil, err
 	}
 
-  createdCommentId, err := newCommentId(commentId)
+	createdCommentId, err := vo.NewUuId(commentId)
 	if err != nil {
 		return nil, err
 	}
 
-	createdUserId, err := newUserId(userId)
+	createdUserId, err := vo.NewUuId(userId)
 	if err != nil {
 		return nil, err
 	}
 
 	commentLike := CommentLike{
 		commentLikeId: *createdCommentLikeId,
-    commentId:     *createdCommentId,
-		userId:       *createdUserId,
+		commentId:     *createdCommentId,
+		userId:        *createdUserId,
 	}
 	return &commentLike, nil
 }
@@ -51,50 +48,14 @@ func Create(commentId string, userId string) (*CommentLike, error) {
 	return comment, err
 }
 
-func (c CommentLike) GetCommentLikeLikeId() commentLikeId {
+func (c CommentLike) GetCommentLikeLikeId() vo.UuId {
 	return c.commentLikeId
 }
 
-func (c CommentLike) GetCommentId() commentId {
+func (c CommentLike) GetCommentId() vo.UuId {
 	return c.commentId
 }
 
-func (c CommentLike) GetUserId() userId {
+func (c CommentLike) GetUserId() vo.UuId {
 	return c.userId
-}
-
-func newCommentLikeId(value string) (*commentLikeId, error) {
-
-	if value == "" {
-		err := fmt.Errorf("%s", "empty arg:commentLikeId newCommentLikeId()")
-		return nil, err
-	}
-
-	commentLikeId := commentLikeId(value)
-
-	return &commentLikeId, nil
-}
-
-func newCommentId(value string) (*commentId, error) {
-
-	if value == "" {
-		err := fmt.Errorf("%s", "empty arg:commentId newCommentId()")
-		return nil, err
-	}
-
-	commentId := commentId(value)
-
-	return &commentId, nil
-}
-
-
-func newUserId(value string) (*userId, error) {
-
-	if value == "" {
-		err := fmt.Errorf("%s", "empty arg:userId newUserId()")
-		return nil, err
-	}
-
-	userId := userId(value)
-	return &userId, nil
 }
