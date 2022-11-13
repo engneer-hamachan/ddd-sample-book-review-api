@@ -3,8 +3,6 @@ package comment_like
 import (
 	"app/domain/model/vo"
 	"github.com/google/uuid"
-	"app/domain/model/review/comment"
-	"app/domain/model/user"
 )
 
 type CommentLike struct {

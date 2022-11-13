@@ -3,9 +3,8 @@ package review
 import (
 	"app/domain/model/vo"
 	"fmt"
-	"time"
 	"github.com/google/uuid"
-	"app/domain/model/user"
+	"time"
 )
 
 type Review struct {
@@ -19,8 +18,6 @@ type Review struct {
 	stars       vo.Stars
 	publicFlg   vo.Flag
 }
-
-type publicFlg bool
 
 func New(reviewId string, userId string, bookTitle string, reviewTitle string, publisher string, reviewVal string, readedAt time.Time, stars int, publicFlg bool) (*Review, error) {
 
