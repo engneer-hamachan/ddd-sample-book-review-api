@@ -1,15 +1,15 @@
 package user
 
 import (
-	"github.com/google/uuid"
 	"app/domain/model/vo"
+	"github.com/google/uuid"
 )
 
 type User struct {
-	userId     vo.UuId
-	name       vo.PersonName
-	mail       vo.Email
-	password   vo.Password
+	userId   vo.UuId
+	name     vo.PersonName
+	mail     vo.Email
+	password vo.Password
 }
 
 func New(userId string, name string, mail string, pass string) (*User, error) {
@@ -35,15 +35,15 @@ func New(userId string, name string, mail string, pass string) (*User, error) {
 	}
 
 	user := User{
-		userId:     *createdUserId,
-		name:       *createdName,
-		mail:       *createdMail,
-		password:   *createdPassword,
+		userId:   *createdUserId,
+		name:     *createdName,
+		mail:     *createdMail,
+		password: *createdPassword,
 	}
 	return &user, nil
 }
 
-//Create Constructor
+// Create Constructor
 func Create(name string, mail string, pass string) (*User, error) {
 	userId := uuid.New().String()
 	user, err := New(userId, name, mail, pass)
@@ -55,19 +55,19 @@ func Create(name string, mail string, pass string) (*User, error) {
 	return user, err
 }
 
-func (u User) GetUserId() vo.UuId {
+func (u *User) GetUserId() vo.UuId {
 	return u.userId
 }
 
-func (u User) GetName() vo.PersonName {
+func (u *User) GetName() vo.PersonName {
 	return u.name
 }
 
-func (u User) GetMail() vo.Email {
+func (u *User) GetMail() vo.Email {
 	return u.mail
 }
 
-func (u User) GetPassword() vo.Password {
+func (u *User) GetPassword() vo.Password {
 	return u.password
 }
 

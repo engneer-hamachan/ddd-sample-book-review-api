@@ -2,7 +2,6 @@ package comment_like
 
 import (
 	"app/domain/model/vo"
-	"fmt"
 	"github.com/google/uuid"
 )
 
@@ -48,14 +47,14 @@ func Create(commentId string, userId string) (*CommentLike, error) {
 	return comment, err
 }
 
-func (c CommentLike) GetCommentLikeLikeId() vo.UuId {
+func (c *CommentLike) GetCommentLikeLikeId() vo.UuId {
 	return c.commentLikeId
 }
 
-func (c CommentLike) GetCommentId() vo.UuId {
+func (c *CommentLike) GetCommentId() vo.UuId {
 	return c.commentId
 }
 
-func (c CommentLike) GetUserId() vo.UuId {
+func (c *CommentLike) GetUserId() vo.UuId {
 	return c.userId
 }

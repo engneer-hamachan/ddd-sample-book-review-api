@@ -48,19 +48,19 @@ func Create(reviewId string, userId string) (*ReviewLike, error) {
 	return review, err
 }
 
-func (r ReviewLike) GetReviewLikeId() vo.UuId {
+func (r *ReviewLike) GetReviewLikeId() vo.UuId {
 	return r.reviewLikeId
 }
 
-func (r ReviewLike) GetReviewId() vo.UuId {
+func (r *ReviewLike) GetReviewId() vo.UuId {
 	return r.reviewId
 }
 
-func (r ReviewLike) GetUserId() vo.UuId {
+func (r *ReviewLike) GetUserId() vo.UuId {
 	return r.userId
 }
 
-func (r ReviewLike) IsReviewLikeYours(current_user_id string) (b bool, err error) {
+func (r *ReviewLike) IsReviewLikeYours(current_user_id string) (b bool, err error) {
 
 	if string(r.userId) != current_user_id {
 		err := fmt.Errorf("%s", "this review like is not yours")
