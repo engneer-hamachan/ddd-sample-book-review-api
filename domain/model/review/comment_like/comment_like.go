@@ -2,6 +2,7 @@ package comment_like
 
 import (
 	"app/domain/model/vo"
+	"fmt"
 	"github.com/google/uuid"
 )
 
@@ -47,7 +48,7 @@ func Create(commentId string, userId string) (*CommentLike, error) {
 	return comment, err
 }
 
-func (c *CommentLike) GetCommentLikeLikeId() vo.UuId {
+func (c *CommentLike) GetCommentLikeId() vo.UuId {
 	return c.commentLikeId
 }
 
@@ -57,4 +58,16 @@ func (c *CommentLike) GetCommentId() vo.UuId {
 
 func (c *CommentLike) GetUserId() vo.UuId {
 	return c.userId
+}
+
+func (c CommentLike) IsCommentLikeYours(current_user_id string) (b bool, err error) {
+
+	if string(c.userId) != current_user_id {
+		err := fmt.Errorf("%s", "this comment like is not yours")
+		return false, err
+
+	}
+
+	return true, nil
+
 }

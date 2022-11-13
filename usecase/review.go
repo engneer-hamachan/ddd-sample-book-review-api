@@ -6,8 +6,6 @@ import (
 	"app/domain/model/review/comment"
 	"app/domain/model/review/comment_like"
 	"app/domain/model/review/review_like"
-	//	"app/domain/model/review/comment_like"
-	"app/domain/domain_service"
 	"app/domain/repository"
 	"app/usecase/query_service"
 	"app/usecase/query_service/dto"
