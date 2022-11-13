@@ -1,51 +1,52 @@
 package user
 
 import (
+	"app/domain/model/vo"
 	"github.com/google/uuid"
 )
 
 type User struct {
-	userId     UserId
-	name       name
-	mail       mail
-	password   password
+	userId   vo.UuId
+	name     vo.PersonName
+	mail     vo.Email
+	password vo.Password
 }
 
-func New(userId string, name string, mail string, password string) (*User, error) {
+func New(userId string, name string, mail string, pass string) (*User, error) {
 
-	createdUserId, err := NewUserId(userId)
+	createdUserId, err := vo.NewUuId(userId)
 	if err != nil {
 		return nil, err
 	}
 
-	createdName, err := newName(name)
+	createdName, err := vo.NewPersonName(name)
 	if err != nil {
 		return nil, err
 	}
 
-	createdMail, err := newMail(mail)
+	createdMail, err := vo.NewEmail(mail)
 	if err != nil {
 		return nil, err
 	}
 
-	createdPassword, err := newPassword(password)
+	createdPassword, err := vo.NewPassword(pass)
 	if err != nil {
 		return nil, err
 	}
 
 	user := User{
-		userId:     *createdUserId,
-		name:       *createdName,
-		mail:       *createdMail,
-		password:   *createdPassword,
+		userId:   *createdUserId,
+		name:     *createdName,
+		mail:     *createdMail,
+		password: *createdPassword,
 	}
 	return &user, nil
 }
 
-//Create Constructor
-func Create(name string, mail string, password string) (*User, error) {
+// Create Constructor
+func Create(name string, mail string, pass string) (*User, error) {
 	userId := uuid.New().String()
-	user, err := New(userId, name, mail, password)
+	user, err := New(userId, name, mail, pass)
 
 	if err != nil {
 		return nil, err
@@ -54,25 +55,25 @@ func Create(name string, mail string, password string) (*User, error) {
 	return user, err
 }
 
-func (u User) GetUserId() UserId {
+func (u *User) GetUserId() vo.UuId {
 	return u.userId
 }
 
-func (u User) GetName() name {
+func (u *User) GetName() vo.PersonName {
 	return u.name
 }
 
-func (u User) GetMail() mail {
+func (u *User) GetMail() vo.Email {
 	return u.mail
 }
 
-func (u User) GetPassword() password {
+func (u *User) GetPassword() vo.Password {
 	return u.password
 }
 
 func (u *User) ChangeMail(value string) (*User, error) {
 
-	mail, err := newMail(value)
+	mail, err := vo.NewEmail(value)
 	if err != nil {
 		return nil, err
 	}

@@ -1,36 +1,37 @@
 package comment
 
 import (
+	"app/domain/model/vo"
 	"github.com/google/uuid"
 	"app/domain/model/review"
 	"app/domain/model/user"
 )
 
 type Comment struct {
-	commentId CommentId
-	reviewId  review.ReviewId
-	userId    user.UserId
-	comment   commentVal
+	commentId vo.UuId
+	reviewId  vo.UuId
+	userId    vo.UuId
+	comment   vo.Comment
 }
 
 func New(commentId string, reviewId string, userId string, commentVal string) (*Comment, error) {
 
-	createdCommentId, err := NewCommentId(commentId)
+	createdCommentId, err := vo.NewUuId(commentId)
 	if err != nil {
 		return nil, err
 	}
 
-	createdReviewId, err := review.NewReviewId(reviewId)
+	createdReviewId, err := vo.NewUuId(reviewId)
 	if err != nil {
 		return nil, err
 	}
 
-	createdUserId, err := user.NewUserId(userId)
+	createdUserId, err := vo.NewUuId(userId)
 	if err != nil {
 		return nil, err
 	}
 
-	createdComment, err := newCommentVal(commentVal)
+	createdComment, err := vo.NewComment(commentVal)
 	if err != nil {
 		return nil, err
 	}
@@ -55,18 +56,18 @@ func Create(reviewId string, userId string, commentVal string) (*Comment, error)
 	return comment, err
 }
 
-func (c Comment) GetCommentId() CommentId {
+func (c *Comment) GetCommentId() vo.UuId {
 	return c.commentId
 }
 
-func (c Comment) GetReviewId() review.ReviewId {
+func (c *Comment) GetReviewId() vo.UuId {
 	return c.reviewId
 }
 
-func (c Comment) GetUserId() user.UserId {
+func (c *Comment) GetUserId() vo.UuId {
 	return c.userId
 }
 
-func (c Comment) GetComment() commentVal {
+func (c *Comment) GetComment() vo.Comment {
 	return c.comment
 }

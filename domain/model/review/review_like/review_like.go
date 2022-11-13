@@ -1,6 +1,7 @@
 package review_like
 
 import (
+	"app/domain/model/vo"
 	"fmt"
 	"github.com/google/uuid"
 	"app/domain/model/review"
@@ -8,24 +9,24 @@ import (
 )
 
 type ReviewLike struct {
-	reviewLikeId reviewLikeId
-	reviewId     review.ReviewId
-	userId       user.UserId
+	reviewLikeId vo.UuId
+	reviewId     vo.UuId
+	userId       vo.UuId
 }
 
 func New(reviewLikeId string, reviewId string, userId string) (*ReviewLike, error) {
 
-	createdReviewLikeId, err := newReviewLikeId(reviewLikeId)
+	createdReviewLikeId, err := vo.NewUuId(reviewLikeId)
 	if err != nil {
 		return nil, err
 	}
 
-	createdReviewId, err := review.NewReviewId(reviewId)
+	createdReviewId, err := vo.NewUuId(reviewId)
 	if err != nil {
 		return nil, err
 	}
 
-	createdUserId, err := user.NewUserId(userId)
+	createdUserId, err := vo.NewUuId(userId)
 	if err != nil {
 		return nil, err
 	}
@@ -49,20 +50,19 @@ func Create(reviewId string, userId string) (*ReviewLike, error) {
 	return review, err
 }
 
-func (r ReviewLike) GetReviewLikeId() reviewLikeId {
+func (r *ReviewLike) GetReviewLikeId() vo.UuId {
 	return r.reviewLikeId
 }
 
-func (r ReviewLike) GetReviewId() review.ReviewId {
+func (r *ReviewLike) GetReviewId() vo.UuId {
 	return r.reviewId
 }
 
-func (r ReviewLike) GetUserId() user.UserId {
+func (r *ReviewLike) GetUserId() vo.UuId {
 	return r.userId
 }
 
-func (r ReviewLike) IsReviewLikeYours(current_user_id string) (b bool, err error) {
-
+func (r *ReviewLike) IsReviewLikeYours(current_user_id string) (b bool, err error) {
 	if string(r.userId) != current_user_id {
 		err := fmt.Errorf("%s", "this review like is not yours")
 		return false, err

@@ -8,6 +8,7 @@ import (
 	handler "app/interfaces/handler"
 	"app/middleware"
 	"app/usecase"
+	"fmt"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"time"
@@ -81,4 +82,5 @@ func main() {
 	}
 
 	router.Run("localhost:8080")
+	fmt.Println("start")
 }

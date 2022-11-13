@@ -19,7 +19,7 @@ func NewAuthUseCase(aqs query_service.AuthQueryService) AuthUseCase {
 	}
 }
 
-func (au authUseCase) Login(mail string) (*dto.UserForAuth, error) {
+func (au *authUseCase) Login(mail string) (*dto.UserForAuth, error) {
 	user, err := au.authQueryService.GetUserByMailForAuth(mail)
 	return user, err
 }

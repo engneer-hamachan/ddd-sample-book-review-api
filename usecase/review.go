@@ -6,6 +6,8 @@ import (
 	"app/domain/model/review/comment"
 	"app/domain/model/review/comment_like"
 	"app/domain/model/review/review_like"
+	//	"app/domain/model/review/comment_like"
+	"app/domain/domain_service"
 	"app/domain/repository"
 	"app/usecase/query_service"
 	"app/usecase/query_service/dto"
@@ -41,7 +43,7 @@ func NewReviewUseCase(rr repository.ReviewRepository, rds domain_service.ReviewD
 	}
 }
 
-func (ru reviewUseCase) ReviewCreate(user_id string, book_title string, review_title string, publisher string, reviewVal string, readed_at time.Time, stars int, public_flg bool) (review_id *string, err error) {
+func (ru *reviewUseCase) ReviewCreate(user_id string, book_title string, review_title string, publisher string, reviewVal string, readed_at time.Time, stars int, public_flg bool) (review_id *string, err error) {
 
 	created_review, err := review.Create(user_id, book_title, review_title, publisher, reviewVal, readed_at, stars, public_flg)
 	if err != nil {
@@ -56,7 +58,7 @@ func (ru reviewUseCase) ReviewCreate(user_id string, book_title string, review_t
 	return review_id, nil
 }
 
-func (ru reviewUseCase) ReviewDetail(review_id string, current_page int) (*dto.ReviewWithComments, error) {
+func (ru *reviewUseCase) ReviewDetail(review_id string, current_page int) (*dto.ReviewWithComments, error) {
 
 	review, err := ru.reviewQueryService.GetReviewWithComments(review_id, current_page)
 	if err != nil {
@@ -66,7 +68,7 @@ func (ru reviewUseCase) ReviewDetail(review_id string, current_page int) (*dto.R
 	return review, nil
 }
 
-func (ru reviewUseCase) ReviewAll(current_page int) (*dto.Reviews, error) {
+func (ru *reviewUseCase) ReviewAll(current_page int) (*dto.Reviews, error) {
 
 	reviews, err := ru.reviewQueryService.GetReviews(current_page)
 	if err != nil {
@@ -76,7 +78,7 @@ func (ru reviewUseCase) ReviewAll(current_page int) (*dto.Reviews, error) {
 	return reviews, nil
 }
 
-func (ru reviewUseCase) ChangeReviewPublicFlg(review_id string, current_user_id string) error {
+func (ru *reviewUseCase) ChangeReviewPublicFlg(review_id string, current_user_id string) error {
 
 	review, err := ru.reviewRepository.GetReviewByID(review_id)
 	if err != nil {
@@ -101,7 +103,7 @@ func (ru reviewUseCase) ChangeReviewPublicFlg(review_id string, current_user_id 
 	return nil
 }
 
-func (ru reviewUseCase) ReviewDelete(review_id string, current_user_id string) error {
+func (ru *reviewUseCase) ReviewDelete(review_id string, current_user_id string) error {
 
 	review, err := ru.reviewRepository.GetReviewByID(review_id)
 	if err != nil {
@@ -121,7 +123,7 @@ func (ru reviewUseCase) ReviewDelete(review_id string, current_user_id string) e
 	return nil
 }
 
-func (ru reviewUseCase) CommentCreate(review_id string, user_id string, commentVal string) (comment_id *string, err error) {
+func (ru *reviewUseCase) CommentCreate(review_id string, user_id string, commentVal string) (comment_id *string, err error) {
 
 	created_comment, err := comment.Create(review_id, user_id, commentVal)
 	if err != nil {
@@ -136,7 +138,7 @@ func (ru reviewUseCase) CommentCreate(review_id string, user_id string, commentV
 	return comment_id, nil
 }
 
-func (ru reviewUseCase) CommentDelete(comment_id string, current_user_id string) error {
+func (ru *reviewUseCase) CommentDelete(comment_id string, current_user_id string) error {
 
 	comment, err := ru.reviewRepository.GetCommentByID(comment_id)
 	if err != nil {
@@ -156,7 +158,7 @@ func (ru reviewUseCase) CommentDelete(comment_id string, current_user_id string)
 	return nil
 }
 
-func (ru reviewUseCase) ReviewLikeCreate(review_id string, current_user_id string) error {
+func (ru *reviewUseCase) ReviewLikeCreate(review_id string, current_user_id string) error {
 
 	b := ru.reviewDomainService.IsInsertReviewLike(review_id, current_user_id)
 	if b == false {
@@ -177,7 +179,7 @@ func (ru reviewUseCase) ReviewLikeCreate(review_id string, current_user_id strin
 	return nil
 }
 
-func (ru reviewUseCase) ReviewLikeDelete(review_id string, current_user_id string) error {
+func (ru *reviewUseCase) ReviewLikeDelete(review_id string, current_user_id string) error {
 
 	review_like, err := ru.reviewRepository.GetReviewLikeByReviewIdAndUserId(review_id, current_user_id)
 	if err != nil {

@@ -1,6 +1,7 @@
 package review
 
 import (
+	"app/domain/model/vo"
 	"fmt"
 	"time"
 	"github.com/google/uuid"
@@ -8,60 +9,62 @@ import (
 )
 
 type Review struct {
-	reviewId    ReviewId
-	userId      user.UserId
-	bookTitle   bookTitle
-	reviewTitle reviewTitle
-	publisher   publisher
-	review      reviewVal
-	readedAt    readedAt
-	stars       stars
-	publicFlg   publicFlg
+	reviewId    vo.UuId
+	userId      vo.UuId
+	bookTitle   vo.Title
+	reviewTitle vo.Title
+	publisher   vo.Publisher
+	review      vo.Review
+	readedAt    vo.ReadedAt
+	stars       vo.Stars
+	publicFlg   vo.Flag
 }
+
+type publicFlg bool
 
 func New(reviewId string, userId string, bookTitle string, reviewTitle string, publisher string, reviewVal string, readedAt time.Time, stars int, publicFlg bool) (*Review, error) {
 
-	createdReviewId, err := NewReviewId(reviewId)
+	createdReviewId, err := vo.NewUuId(reviewId)
 	if err != nil {
 		return nil, err
 	}
 
-	createdUserId, err := user.NewUserId(userId)
+	createdUserId, err := vo.NewUuId(userId)
 	if err != nil {
 		return nil, err
 	}
 
-	createdBookTitle, err := newBookTitle(bookTitle)
+	createdBookTitle, err := vo.NewTitle(bookTitle)
 	if err != nil {
 		return nil, err
 	}
 
-	createdReviewTitle, err := newReviewTitle(reviewTitle)
+	createdReviewTitle, err := vo.NewTitle(reviewTitle)
 	if err != nil {
 		return nil, err
 	}
 
-	createdPublisher, err := newPublisher(publisher)
+	createdPublisher, err := vo.NewPublisher(publisher)
 	if err != nil {
 		return nil, err
 	}
 
-	createdReview, err := newReviewComment(reviewVal)
+	createdReview, err := vo.NewReview(reviewVal)
 	if err != nil {
 		return nil, err
 	}
 
-	createdReadedAt, err := newReadedAt(readedAt)
+	createdReadedAt, err := vo.NewReadedAt(readedAt)
 	if err != nil {
 		return nil, err
 	}
 
-	createdStars, err := newStars(stars)
+	createdStars, err := vo.NewStars(stars)
 	if err != nil {
 		return nil, err
 	}
 
-	createdPublicFlg, err := newPublicFlg(publicFlg)
+	createdPublicFlg, err := vo.NewFlag(publicFlg)
 	if err != nil {
 		return nil, err
 	}
@@ -80,10 +83,17 @@ func New(reviewId string, userId string, bookTitle string, reviewTitle string, p
 	return &review, nil
 }
 
-func Create(userId string, bookTitle string, reviewTitle string, publisher string, reviewVal string, readedAt time.Time, stars int, publicFlg bool) (*Review, error) {
+func Create(userId string,
+	bookTitle string,
+	reviewTitle string,
+	publisher string,
+	reviewVal string,
+	readedAt time.Time,
+	stars int,
+	publicFlg bool) (*Review, error) {
 	reviewId := uuid.New().String()
-	review, err := New(reviewId, userId, bookTitle, reviewTitle, publisher, reviewVal, readedAt, stars, publicFlg)
-
+	review, err :=
+		New(reviewId, userId, bookTitle, reviewTitle, publisher, reviewVal, readedAt, stars, publicFlg)
 	if err != nil {
 		return nil, err
 	}
@@ -91,39 +101,39 @@ func Create(userId string, bookTitle string, reviewTitle string, publisher strin
 	return review, err
 }
 
-func (r Review) GetReviewId() ReviewId {
+func (r Review) GetReviewId() vo.UuId {
 	return r.reviewId
 }
 
-func (r Review) GetUserId() user.UserId {
+func (r Review) GetUserId() vo.UuId {
 	return r.userId
 }
 
-func (r Review) GetBookTitle() bookTitle {
+func (r Review) GetBookTitle() vo.Title {
 	return r.bookTitle
 }
 
-func (r Review) GetReviewTitle() reviewTitle {
+func (r Review) GetReviewTitle() vo.Title {
 	return r.reviewTitle
 }
 
-func (r Review) GetPublisher() publisher {
+func (r Review) GetPublisher() vo.Publisher {
 	return r.publisher
 }
 
-func (r Review) GetReview() reviewVal {
+func (r Review) GetReview() vo.Review {
 	return r.review
 }
 
-func (r Review) GetReadedAt() readedAt {
+func (r Review) GetReadedAt() vo.ReadedAt {
 	return r.readedAt
 }
 
-func (r Review) GetStars() stars {
+func (r Review) GetStars() vo.Stars {
 	return r.stars
 }
 
-func (r Review) GetPublicFlg() publicFlg {
+func (r Review) GetPublicFlg() vo.Flag {
 	return r.publicFlg
 }
 

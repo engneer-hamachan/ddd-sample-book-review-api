@@ -29,7 +29,7 @@ func NewUserUseCase(ur repository.UserRepository, uds domain_service.UserDomainS
 	}
 }
 
-func (uu userUseCase) UserCreate(name string, mail string, password string) (user_id *string, err error) {
+func (uu *userUseCase) UserCreate(name string, mail string, password string) (user_id *string, err error) {
 
 	if uu.userDomainService.IsUserExists(mail) {
 		err := fmt.Errorf("%s", "Duplicated User Mail Address")
@@ -49,7 +49,7 @@ func (uu userUseCase) UserCreate(name string, mail string, password string) (use
 	return user_id, nil
 }
 
-func (uu userUseCase) UserUpdate(user_id string, name string, mail string, password string) error {
+func (uu *userUseCase) UserUpdate(user_id string, name string, mail string, password string) error {
 
 	if !uu.userDomainService.IsUserEnabled(user_id) {
 		err := fmt.Errorf("%s", "user_id is not found")
@@ -74,7 +74,7 @@ func (uu userUseCase) UserUpdate(user_id string, name string, mail string, passw
 	return nil
 }
 
-func (uu userUseCase) UserDetail(user_id string) (*dto.UserForAuth, error) {
+func (uu *userUseCase) UserDetail(user_id string) (*dto.UserForAuth, error) {
 	user, err := uu.userQueryService.GetUserByID(user_id)
 	if err != nil {
 		return nil, err
