@@ -20,6 +20,8 @@ type ReviewHandler interface {
 	CommentDelete(c *gin.Context)
 	ReviewLikeCreate(c *gin.Context)
 	ReviewLikeDelete(c *gin.Context)
+	CommentLikeCreate(c *gin.Context)
+	CommentLikeDelete(c *gin.Context)
 }
 
 type reviewHandler struct {
@@ -41,7 +43,7 @@ func (rh reviewHandler) ReviewCreate(c *gin.Context) {
 		Review      string `json:"review" binding:"required"`
 		ReadedAt    string `json:"readed_at" binding:"required"`
 		Stars       int    `json:"stars" binding:"required"`
-		PublicFlg   bool `json:"public_flg" binding:"required"`
+		PublicFlg   bool   `json:"public_flg" binding:"required"`
 	}
 
 	var json RequestDataField
@@ -197,8 +199,8 @@ func (rh reviewHandler) ReviewDelete(c *gin.Context) {
 func (rh reviewHandler) CommentCreate(c *gin.Context) {
 
 	type RequestDataField struct {
-		ReviewId   string `json:"review_id" binding:"required"`
-		Comment string `json:"comment" binding:"required"`
+		ReviewId string `json:"review_id" binding:"required"`
+		Comment  string `json:"comment" binding:"required"`
 	}
 
 	var json RequestDataField
@@ -262,7 +264,7 @@ func (rh reviewHandler) CommentDelete(c *gin.Context) {
 func (rh reviewHandler) ReviewLikeCreate(c *gin.Context) {
 
 	type RequestDataField struct {
-		ReviewId   string `json:"review_id" binding:"required"`
+		ReviewId string `json:"review_id" binding:"required"`
 	}
 
 	var json RequestDataField
@@ -293,7 +295,7 @@ func (rh reviewHandler) ReviewLikeCreate(c *gin.Context) {
 func (rh reviewHandler) ReviewLikeDelete(c *gin.Context) {
 
 	type RequestDataField struct {
-		ReviewId   string `json:"review_id" binding:"required"`
+		ReviewId string `json:"review_id" binding:"required"`
 	}
 
 	var json RequestDataField
@@ -319,4 +321,66 @@ func (rh reviewHandler) ReviewLikeDelete(c *gin.Context) {
 	}
 
 	c.IndentedJSON(http.StatusCreated, gin.H{"message": "delete review like is success"})
+}
+
+func (rh reviewHandler) CommentLikeCreate(c *gin.Context) {
+
+	type RequestDataField struct {
+		CommentId string `json:"comment_id" binding:"required"`
+	}
+
+	var json RequestDataField
+	err := c.BindJSON(&json)
+	if err != nil {
+		fmt.Println(err.Error())
+		c.IndentedJSON(http.StatusBadRequest, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
+
+	comment_id := json.CommentId
+	current_user_id := middleware.ClaimUserID
+
+	err = rh.reviewUseCase.CommentLikeCreate(comment_id, current_user_id)
+	if err != nil {
+		fmt.Println(err.Error())
+		c.IndentedJSON(http.StatusBadRequest, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
+
+	c.IndentedJSON(http.StatusCreated, gin.H{"message": "creeate comment like is success"})
+}
+
+func (rh reviewHandler) CommentLikeDelete(c *gin.Context) {
+
+	type RequestDataField struct {
+		CommentId string `json:"comment_id" binding:"required"`
+	}
+
+	var json RequestDataField
+	err := c.BindJSON(&json)
+	if err != nil {
+		fmt.Println(err.Error())
+		c.IndentedJSON(http.StatusBadRequest, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
+
+	comment_id := json.CommentId
+	current_user_id := middleware.ClaimUserID
+
+	err = rh.reviewUseCase.CommentLikeDelete(comment_id, current_user_id)
+	if err != nil {
+		fmt.Println(err.Error())
+		c.IndentedJSON(http.StatusBadRequest, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
+
+	c.IndentedJSON(http.StatusCreated, gin.H{"message": "delete comment like is success"})
 }

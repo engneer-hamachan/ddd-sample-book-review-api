@@ -4,6 +4,8 @@ import (
 	"app/domain/model/vo"
 	"fmt"
 	"github.com/google/uuid"
+	"app/domain/model/review"
+	"app/domain/model/user"
 )
 
 type ReviewLike struct {
@@ -61,7 +63,6 @@ func (r *ReviewLike) GetUserId() vo.UuId {
 }
 
 func (r *ReviewLike) IsReviewLikeYours(current_user_id string) (b bool, err error) {
-
 	if string(r.userId) != current_user_id {
 		err := fmt.Errorf("%s", "this review like is not yours")
 		return false, err

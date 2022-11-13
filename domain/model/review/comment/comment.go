@@ -3,6 +3,8 @@ package comment
 import (
 	"app/domain/model/vo"
 	"github.com/google/uuid"
+	"app/domain/model/review"
+	"app/domain/model/user"
 )
 
 type Comment struct {

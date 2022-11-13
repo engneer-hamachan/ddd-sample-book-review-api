@@ -3,10 +3,10 @@ package rest
 import (
 	"app/middleware"
 	"app/usecase"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 	"net/http"
-	"fmt"
 )
 
 type UserHandler interface {
@@ -28,9 +28,9 @@ func NewUserHandler(uu usecase.UserUseCase) UserHandler {
 func (uh userHandler) UserCreate(c *gin.Context) {
 
 	type RequestDataField struct {
-		Name       string `json:"name" binding:"required"`
-		Mail       string `json:"mail" binding:"required"`
-		Password   string `json:"password" binding:"required"`
+		Name     string `json:"name" binding:"required"`
+		Mail     string `json:"mail" binding:"required"`
+		Password string `json:"password" binding:"required"`
 	}
 	var json RequestDataField
 
@@ -79,9 +79,9 @@ func (uh userHandler) UserDetail(c *gin.Context) {
 func (uh userHandler) UserUpdate(c *gin.Context) {
 
 	type RequestDataField struct {
-		Name       string `json:"name" binding:"required"`
-		Mail       string `json:"mail" binding:"required"`
-		Password   string `json:"password" binding:"required"`
+		Name     string `json:"name" binding:"required"`
+		Mail     string `json:"mail" binding:"required"`
+		Password string `json:"password" binding:"required"`
 	}
 	var json RequestDataField
 

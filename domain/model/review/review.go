@@ -3,8 +3,9 @@ package review
 import (
 	"app/domain/model/vo"
 	"fmt"
-	"github.com/google/uuid"
 	"time"
+	"github.com/google/uuid"
+	"app/domain/model/user"
 )
 
 type Review struct {

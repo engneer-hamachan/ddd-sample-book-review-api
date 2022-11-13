@@ -6,15 +6,15 @@ import (
 
 type ReviewLike struct {
 	ReviewLikeId string
-  ReviewId     string
+	ReviewId     string
 	UserId       string
 }
 
 func ConvertReviewLike(r *review_like.ReviewLike) *ReviewLike {
 	return &ReviewLike{
-		ReviewLikeId:    string(r.GetReviewLikeId()),
-		ReviewId:    string(r.GetReviewId()),
-		UserId:      string(r.GetUserId()),
+		ReviewLikeId: string(r.GetReviewLikeId()),
+		ReviewId:     string(r.GetReviewId()),
+		UserId:       string(r.GetUserId()),
 	}
 }
 

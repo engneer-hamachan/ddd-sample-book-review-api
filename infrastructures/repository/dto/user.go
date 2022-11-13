@@ -6,21 +6,21 @@ import (
 )
 
 type User struct {
-	ID         int
-	UserId     string
-	Name       string
-	Mail       string
-	Password   string
-	CreatedAt  time.Time
-	UpdatedAt  time.Time
+	ID        int
+	UserId    string
+	Name      string
+	Mail      string
+	Password  string
+	CreatedAt time.Time
+	UpdatedAt time.Time
 }
 
 func ConvertUser(u *user.User) *User {
 	return &User{
-		UserId:     string(u.GetUserId()),
-		Name:       string(u.GetName()),
-		Mail:       string(u.GetMail()),
-		Password:   string(u.GetPassword()),
+		UserId:   string(u.GetUserId()),
+		Name:     string(u.GetName()),
+		Mail:     string(u.GetMail()),
+		Password: string(u.GetPassword()),
 	}
 }
 
