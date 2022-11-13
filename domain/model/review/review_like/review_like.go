@@ -4,8 +4,6 @@ import (
 	"app/domain/model/vo"
 	"fmt"
 	"github.com/google/uuid"
-	"app/domain/model/review"
-	"app/domain/model/user"
 )
 
 type ReviewLike struct {
