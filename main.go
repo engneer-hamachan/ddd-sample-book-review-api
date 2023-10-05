@@ -2,16 +2,17 @@ package main
 
 import (
 	"app/config"
-	"app/infrastructures/domain_service"
+	"app/domain/domain_service"
 	"app/infrastructures/query_service"
 	"app/infrastructures/repository"
 	handler "app/interfaces/handler"
 	"app/middleware"
 	"app/usecase"
 	"fmt"
+	"time"
+
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"time"
 )
 
 func main() {
@@ -43,13 +44,13 @@ func main() {
 	defer db.Close()
 	//DI
 	userRepository := repository.NewUserRepository(db)
-	userDomainService := domain_service.NewUserDomainService(db)
+	userDomainService := domain_service.NewUserDomainService(userRepository)
 	userQueryService := query_service.NewUserQueryService(db)
 	userUseCase := usecase.NewUserUseCase(userRepository, userDomainService, userQueryService)
 	userHandler := handler.NewUserHandler(userUseCase)
 
 	reviewRepository := repository.NewReviewRepository(db)
-	reviewDomainService := domain_service.NewReviewDomainService(db)
+	reviewDomainService := domain_service.NewReviewDomainService(reviewRepository)
 	reviewQueryService := query_service.NewReviewQueryService(db)
 	reviewUseCase := usecase.NewReviewUseCase(reviewRepository, reviewDomainService, reviewQueryService)
 	reviewHandler := handler.NewReviewHandler(reviewUseCase)

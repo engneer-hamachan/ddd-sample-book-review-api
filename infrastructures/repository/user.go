@@ -4,6 +4,7 @@ import (
 	"app/domain/model/user"
 	"app/domain/repository"
 	"app/infrastructures/repository/dto"
+
 	"github.com/jinzhu/gorm"
 )
 
@@ -37,4 +38,36 @@ func (ur *userRepository) PutUsers(user *user.User) error {
 	}
 
 	return nil
+}
+
+func (ur *userRepository) GetUser(user_id string) (*user.User, error) {
+	user := dto.User{}
+
+	if result := ur.Conn.Table("users").Where("user_id = ?", user_id).First(&user); result.Error != nil {
+		err := result.Error
+		return nil, err
+	}
+
+	result_user, err := dto.AdaptUser(&user)
+	if err != nil {
+		return nil, err
+	}
+
+	return result_user, nil
+}
+
+func (ur *userRepository) GetUserByEmail(email string) (*user.User, error) {
+	user := dto.User{}
+
+	if result := ur.Conn.Table("users").Where("email = ?", email).First(&user); result.Error != nil {
+		err := result.Error
+		return nil, err
+	}
+
+	result_user, err := dto.AdaptUser(&user)
+	if err != nil {
+		return nil, err
+	}
+
+	return result_user, nil
 }

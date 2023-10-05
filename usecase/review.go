@@ -158,7 +158,11 @@ func (ru *reviewUseCase) CommentDelete(comment_id string, current_user_id string
 
 func (ru *reviewUseCase) ReviewLikeCreate(review_id string, current_user_id string) error {
 
-	b := ru.reviewDomainService.IsInsertReviewLike(review_id, current_user_id)
+	b, err := ru.reviewDomainService.IsInsertReviewLike(review_id, current_user_id)
+	if err != nil {
+		return err
+	}
+
 	if b == false {
 		err := fmt.Errorf("%s", "this review is your liked")
 		return err
@@ -199,7 +203,11 @@ func (ru *reviewUseCase) ReviewLikeDelete(review_id string, current_user_id stri
 
 func (ru reviewUseCase) CommentLikeCreate(comment_id string, current_user_id string) error {
 
-	b := ru.reviewDomainService.IsInsertCommentLike(comment_id, current_user_id)
+	b, err := ru.reviewDomainService.IsInsertCommentLike(comment_id, current_user_id)
+	if err != nil {
+		return err
+	}
+
 	if b == false {
 		err := fmt.Errorf("%s", "this comment is your liked")
 		return err

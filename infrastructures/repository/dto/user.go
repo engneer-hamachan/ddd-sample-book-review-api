@@ -25,6 +25,10 @@ func ConvertUser(u *user.User) *User {
 }
 
 func AdaptUser(converted_user *User) (*user.User, error) {
+	if converted_user == nil {
+		return nil, nil
+	}
+
 	user, err := user.New(converted_user.UserId, converted_user.Name, converted_user.Mail, converted_user.Password)
 
 	if err != nil {

@@ -30,8 +30,12 @@ func NewUserUseCase(ur repository.UserRepository, uds domain_service.UserDomainS
 }
 
 func (uu *userUseCase) UserCreate(name string, mail string, password string) (user_id *string, err error) {
+	b, err := uu.userDomainService.IsUserExists(mail)
+	if err != nil {
+		return nil, err
+	}
 
-	if uu.userDomainService.IsUserExists(mail) {
+	if b == false {
 		err := fmt.Errorf("%s", "Duplicated User Mail Address")
 		return nil, err
 	}
@@ -51,12 +55,19 @@ func (uu *userUseCase) UserCreate(name string, mail string, password string) (us
 
 func (uu *userUseCase) UserUpdate(user_id string, name string, mail string, password string) error {
 
-	if !uu.userDomainService.IsUserEnabled(user_id) {
+	b, err := uu.userDomainService.IsUserEnabled(user_id)
+	if err != nil {
+		return err
+	}
+
+	if b == false {
 		err := fmt.Errorf("%s", "user_id is not found")
 		return err
 	}
 
-	if uu.userDomainService.IsCurrentUserMailDuplicated(user_id, mail) {
+	b, err = uu.userDomainService.IsCurrentUserMailDuplicated(user_id, mail)
+
+	if b {
 		err := fmt.Errorf("%s", "update mail is Dupulicate")
 		return err
 	}
